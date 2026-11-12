@@ -8,7 +8,7 @@ CREATE TABLE IF NOT EXISTS Categorie (
 CREATE TABLE IF NOT EXISTS Spese (
     id INTEGER PRIMARY KEY AUTOINCREMENT,
     data_spesa DATE NOT NULL,
-    importo DECIMAL(10, 2) NOT NULL
+    importo DECIMAL(10, 2) NOT NULL CHECK(importo > 0),
     descrizione TEXT,
     categoria_id INTEGER NOT NULL,
     FOREIGN KEY (categoria_id) REFERENCES Categorie(id)
