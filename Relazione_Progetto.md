@@ -15,7 +15,7 @@ Di seguito una breve sintesi delle logiche e dei costrutti applicati nella scrit
 
 ### Architettura del Database
 
-Il database è strutturato su tre tabelle principali: Categorie, Spese e Budget. Per garantirne il corretto funzionamento ho applicato diverse regole:
+Il database è strutturato su tre tabelle principali: Categorie, Spese e Budget. Per garantire l'integrità dei dati, ho preferito applicare i controlli e i vincoli direttamente al database: 
 
 - Chiavi esterne (Foreign Key): Le ho utilizzate per assicurarmi che ogni spesa o budget inserito sia sempre associato a una categoria realmente esistente e già validata.
 
