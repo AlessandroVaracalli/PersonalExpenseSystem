@@ -99,11 +99,8 @@ def definisci_budget(conn):
     if importo <= 0:
         print("Inserire un budget valido.")
         return
+
             
-    if importo <= 0:
-        print("Inserire un budget valido.")
-        return
-        
     categoria_id = ottieni_id_categoria(conn, nome_categoria)
     if not categoria_id:
         print("La categoria non esiste.")
