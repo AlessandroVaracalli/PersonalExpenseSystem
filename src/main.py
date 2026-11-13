@@ -1,5 +1,4 @@
 import sqlite3
-import sys
 
 def connetti_db():
     conn = sqlite3.connect('spese.db')
@@ -33,7 +32,8 @@ def esegui_script_iniziale(conn):
 
 def ottieni_id_categoria(conn, nome_categoria):
     cursor = conn.cursor()
-    cursor.execute("SELECT id FROM Categorie WHERE nome = ?", (nome_categoria,))
+    # MODIFICA: Uso LOWER() per rendere la ricerca insensibile a maiuscole/minuscole
+    cursor.execute("SELECT id FROM Categorie WHERE LOWER(nome) = LOWER(?)", (nome_categoria,))
     risultato = cursor.fetchone()
     
     if risultato:
@@ -48,7 +48,8 @@ def gestisci_categorie(conn):
         return
     
     cursor = conn.cursor()
-    cursor.execute("SELECT id FROM Categorie WHERE nome = ?", (nome,))
+    # MODIFICA: Controllo insensibile al case
+    cursor.execute("SELECT id FROM Categorie WHERE LOWER(nome) = LOWER(?)", (nome,))
     if cursor.fetchone():
         print("La categoria esiste già.")
     else:
@@ -60,6 +61,7 @@ def inserisci_spesa(conn):
     data = input("Inserisci la data (YYYY-MM-DD): ").strip()
     importo_str = input("Inserisci l'importo: ").strip()
     
+    # MANTENUTO il tuo costrutto originale
     if importo_str.replace('.', '', 1).isdigit():
         importo = float(importo_str)
     else:
@@ -90,6 +92,7 @@ def definisci_budget(conn):
     nome_categoria = input("Inserisci il nome della categoria: ").strip()
     importo_str = input("Inserisci l'importo del budget: ").strip()
     
+    # MANTENUTO il tuo costrutto originale
     if importo_str.replace('.', '', 1).isdigit():
         importo = float(importo_str)
     else:
@@ -100,7 +103,6 @@ def definisci_budget(conn):
         print("Inserire un budget valido.")
         return
 
-            
     categoria_id = ottieni_id_categoria(conn, nome_categoria)
     if not categoria_id:
         print("La categoria non esiste.")
@@ -200,7 +202,6 @@ def visualizza_report(conn):
         else:
             print("Scelta non valida.")
 
-# Funzione aggiunta in autonomia: sezione per valutare un investimento in base al budget residuo del mese
 def gestisci_investimenti(conn):
     print("\n--- Menù Investimenti ---")
     mese_ricerca = input("Inserisci il mese (YYYY-MM) per controllare il budget: ").strip()
@@ -209,6 +210,7 @@ def gestisci_investimenti(conn):
     cursor.execute("SELECT SUM(importo) FROM Budget WHERE mese = ?", (mese_ricerca,))
     riga_budget = cursor.fetchone()
     
+    # Il tuo controllo su 'is not None' è perfetto, lo manteniamo
     if riga_budget and riga_budget[0] is not None:
         totale_budget = float(riga_budget[0])
     else:
@@ -271,7 +273,7 @@ def menu_principale():
         elif scelta == '6':
             print("Uscita dal programma.")
             conn.close()
-            sys.exit(0)
+            break
         else:
             print("Scelta non valida. Riprovare.")
 
