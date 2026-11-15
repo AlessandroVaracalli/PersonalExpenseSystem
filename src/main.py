@@ -32,7 +32,6 @@ def esegui_script_iniziale(conn):
 
 def ottieni_id_categoria(conn, nome_categoria):
     cursor = conn.cursor()
-    # MODIFICA: Uso LOWER() per rendere la ricerca insensibile a maiuscole/minuscole
     cursor.execute("SELECT id FROM Categorie WHERE LOWER(nome) = LOWER(?)", (nome_categoria,))
     risultato = cursor.fetchone()
     
@@ -60,7 +59,6 @@ def inserisci_spesa(conn):
     data = input("Inserisci la data (YYYY-MM-DD): ").strip()
     importo_str = input("Inserisci l'importo: ").strip()
     
-    # MANTENUTO il tuo costrutto originale
     if importo_str.replace('.', '', 1).isdigit():
         importo = float(importo_str)
     else:
@@ -91,7 +89,6 @@ def definisci_budget(conn):
     nome_categoria = input("Inserisci il nome della categoria: ").strip()
     importo_str = input("Inserisci l'importo del budget: ").strip()
     
-    # MANTENUTO il tuo costrutto originale
     if importo_str.replace('.', '', 1).isdigit():
         importo = float(importo_str)
     else:
@@ -201,6 +198,8 @@ def visualizza_report(conn):
         else:
             print("Scelta non valida.")
 
+#Funzionalità extra: investimenti            
+
 def gestisci_investimenti(conn):
     print("\n--- Menù Investimenti ---")
     mese_ricerca = input("Inserisci il mese (YYYY-MM) per controllare il budget: ").strip()
@@ -209,7 +208,6 @@ def gestisci_investimenti(conn):
     cursor.execute("SELECT SUM(importo) FROM Budget WHERE mese = ?", (mese_ricerca,))
     riga_budget = cursor.fetchone()
     
-    # Il tuo controllo su 'is not None' è perfetto, lo manteniamo
     if riga_budget and riga_budget[0] is not None:
         totale_budget = float(riga_budget[0])
     else:
