@@ -48,7 +48,6 @@ def gestisci_categorie(conn):
         return
     
     cursor = conn.cursor()
-    # MODIFICA: Controllo insensibile al case
     cursor.execute("SELECT id FROM Categorie WHERE LOWER(nome) = LOWER(?)", (nome,))
     if cursor.fetchone():
         print("La categoria esiste già.")
