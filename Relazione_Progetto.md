@@ -5,7 +5,7 @@ Mail: alessandro.varacalli@studenti.uniroma5.it
 
 ---
 
-### Progetto: Software di gestione delle Spese personali basato su console
+### Progetto: Software di gestione delle Spese personali e del budget basato su console
 
 Per lo sviluppo del progetto ho utilizzato Python e un database SQL.
 
@@ -34,6 +34,8 @@ L'interfaccia utente rispetta i parametri richiesti:
 - Gestione del menu: Il programma è gestito da un ciclo `while` che mantiene il menu sempre attivo fino a quando l'utente non seleziona l'opzione "6" per uscire.
 
 - Validazione preventiva: Per i controlli numerici ho utilizzato un costrutto `if/else` combinato con il metodo `importo.replace('.', '', 1).isdigit()`, in modo da verificare subito se il testo digitato è un numero decimale valido (rifiutando lettere o segni negativi) prima di provare a converitlo in virgola mobile (`float`).
+
+- Gestione degli errori: per evitare la duplicazione di categorie o errori di ricerca dovuti a maiuscole o minuscole, utilizza la funzione SQL LOWER() nella selezione, senza alterare il dato originale nel database.
 
 - Logica del Budget: Il modulo per l'inserimento del budget interroga prima il database tramite una `SELECT`. Se esiste già un limite impostato per quel mese e per quella categoria, lo sovrascrive aggiornandolo con un `UPDATE`; altrimenti, registra un record nuovo usando un `INSERT`.
 
